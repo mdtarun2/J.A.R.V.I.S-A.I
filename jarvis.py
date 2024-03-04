@@ -78,9 +78,12 @@
 
 import os
 import sys
+import time
 import webbrowser
 from datetime import datetime
 import smtplib
+
+import pyautogui
 from requests import get
 import pyttsx3
 import speech_recognition as sr
@@ -118,7 +121,7 @@ def takeCommand() -> object:
         try:
             audio = r.listen(source, timeout=10, phrase_time_limit=5)
             print("Recognizing...")
-            query = r.recognize_google(audio, language="en-in")
+            query = r.recognize_google(audio, language="en-us")
             print(f"User said: {query}")
             return query
         except sr.WaitTimeoutError:
@@ -135,36 +138,37 @@ if __name__ == "__main__":
 
         if "open Notepad" in query:
             path = "C:\\Windows\\system32\\notepad.exe"
-            os.system(path)
+            os.startfile(path)
             speak("Opening Notepad")
 
         elif "open Chrome" in query:
             path = "C:\\Users\\Administrator\\Desktop\\Safiqul Islam - Chrome.lnk"
-            os.system(path)
+            os.startfile(path)
             speak("Opening Chrome")
 
         elif "open code" in query:
             path = "C:\\Users\\Administrator\\Desktop\\Visual Studio Code.lnk"
-            os.system(path)
+            os.startfile(path)
             speak("Opening Code Studio")
 
         elif "open OBS" in query:
             path = "C:\\Users\\Public\\Desktop\\OBSStudio.lnk"
-            os.system(path)
+            os.startfile(path)
             speak("Opening OBS Studio")
 
-        elif "open code 2" in query:
+        elif "open pycharm" in query:
             path = "C:\\Program Files\\JetBrains\\PyCharm 2023.3.4\\bin\\pycharm64.exe"
-            os.system(path)
+            os.startfile(path)
             speak("Opening PyCharm")
 
         elif "open notion" in query:
             path = "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Notion\\Notion.exe"
-            os.system(path)
+            os.startfile(path)
             speak("Opening Notion")
 
         elif 'open CMD' in query:
-            os.system("start cmd")
+            os.startfile("C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start "
+                         "Menu\\Programs\\System Tools\\Command Prompt.lnk")
             speak("Opening CMD")
 
         elif "open music play" in query:
@@ -176,7 +180,7 @@ if __name__ == "__main__":
 
         elif 'my IP address' in query:
             ip = get("https://api.ipify.org").text
-            speak(f"Your Ip Address is{ip}")
+            speak(f"Your Ip Address is {ip}")
 
         elif 'Wikipedia' in query:
             speak("Searching wikipedia")
@@ -216,7 +220,7 @@ if __name__ == "__main__":
             cm = takeCommand().lower()
             webbrowser.open("https://www.google.com/search?q=")
 
-        elif 'no thank you' in query:
+        elif 'exit' in query:
             speak("Thank you for using me sit, Have a nice day")
             sys.exit()
         elif 'no thank u' in query:
@@ -231,6 +235,13 @@ if __name__ == "__main__":
         elif 'no' in query:
             speak("Thank you for using me sit, Have a nice day")
             sys.exit()
+        elif 'switch the window' in query:
+            pyautogui.keyDown("alt")
+            pyautogui.press("tab")
+            time.sleep(
+                1
+            )
+            pyautogui.keyUp("alt")
+        speak("Ok Sir")
 
-        speak("Sir, do You have other Work ?")
 query = takeCommand()
