@@ -81,8 +81,8 @@ import sys
 import time
 import webbrowser
 from datetime import datetime
-import smtplib
 
+import instaloader
 import pyautogui
 from requests import get
 import pyttsx3
@@ -181,6 +181,19 @@ if __name__ == "__main__":
         elif 'my IP address' in query:
             ip = get("https://api.ipify.org").text
             speak(f"Your Ip Address is {ip}")
+        elif 'where am i' in query:
+            speak("wait sir, let me check")
+            ip = get("https://api.ipify.org").text
+            speak(f"Your Country Is Bangladesh and Your IP Address Is pi {ip}")
+
+        elif "Instagram profile" in query or "profile on instagram" in query:
+            speak("Sir Please Enter The Instagram Id Username :")
+            name = input("Enter the Username:")
+            webbrowser.open(f"https://www.instagram.com/{name}")
+            speak(f"Sir Here The Profile Of The Username is {name}")
+            time.sleep(5)
+            speak(f"Sir Would You Download The Profile PIC  ")
+            condition = takeCommand().lower
 
         elif 'Wikipedia' in query:
             speak("Searching wikipedia")
